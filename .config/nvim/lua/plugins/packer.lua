@@ -87,7 +87,10 @@ return packer.startup(function(use)
     end,
   }
 
-  --tmux navigation
+  -- tmux navigation
   use 'christoomey/vim-tmux-navigator'
+
+  -- markdown
+  use 'dhruvasagar/vim-table-mode'
 
 end)
