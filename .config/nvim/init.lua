@@ -1,32 +1,20 @@
---[[
-
-  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
+local impatient_ok, impatient = pcall(require, "impatient")
+if impatient_ok then
+  impatient.enable_profile()
+end
 
 
-Neovim init file
-Version: 0.30.0 - 2021/11/01 10:35
-Maintainer: Brainf+ck
-Website: https://github.com/brainfucksec/neovim-lua
-
---]]
-
------------------------------------------------------------
--- Import Lua modules
------------------------------------------------------------
-require('settings')
-require('keymaps')
-require('plugins/packer')
-require('plugins/nvim-tree')
-require('plugins/indent-blankline')
-require('plugins/nvim-autopairs')
-require('plugins/feline')
-require('plugins/nvim-cmp')
-require('plugins/nvim-lspconfig')
-require('plugins/nvim-treesitter')
-require('plugins/telescope')
-require('plugins/hop')
+for _, source in ipairs {
+  "core.utils",
+  "core.options",
+  "core.plugins",
+  "core.autocmds",
+  "core.mappings",
+  "core.ui",
+  "configs.which-key-register",
+} do
+  local status_ok, fault = pcall(require, source)
+  if not status_ok then
+    error("Failed to load " .. source .. "\n\n" .. fault)
+  end
+end
