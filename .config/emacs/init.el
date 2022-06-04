@@ -96,6 +96,19 @@
       scroll-preserve-screen-position t
       auto-window-vscroll nil)
 
+;; GIT
+(use-package magit
+  :commands magit-status
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+;; NOTE: Make sure to configure a GitHub token before using this package!
+;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+;; (use-package forge
+;;  :after magit)
+
+
 ;; Fonts
 (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font Mono" :height gps/default-font-size)
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height gps/default-font-size :weight 'regular)
