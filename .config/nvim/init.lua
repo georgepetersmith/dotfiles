@@ -1,20 +1,17 @@
-local impatient_ok, impatient = pcall(require, "impatient")
-if impatient_ok then
-  impatient.enable_profile()
+require('base')
+require('highlights')
+require('maps')
+require('plugins')
+
+local has = function(x)
+  return vim.fn.has(x) == 1
 end
+local is_mac = has "macunix"
+local is_win = has "win32"
 
-
-for _, source in ipairs {
-  "core.utils",
-  "core.options",
-  "core.plugins",
-  "core.autocmds",
-  "core.mappings",
-  "core.ui",
-  "configs.which-key-register",
-} do
-  local status_ok, fault = pcall(require, source)
-  if not status_ok then
-    error("Failed to load " .. source .. "\n\n" .. fault)
-  end
+if is_mac then
+  require('macos')
+end
+if is_win then
+  require('windows')
 end
