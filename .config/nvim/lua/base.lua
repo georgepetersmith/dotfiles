@@ -1,8 +1,5 @@
 vim.cmd("autocmd!")
 
-vim.g.mapleader = ","
-
-vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 
@@ -42,6 +39,7 @@ vim.opt.writebackup = false
 vim.opt.ch = 0
 vim.opt.winbar='%f'
 vim.opt.spell=true
+vim.opt.termguicolors = true
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
