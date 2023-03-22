@@ -40,6 +40,8 @@ vim.opt.ch = 0
 vim.opt.winbar='%f'
 vim.opt.spell=true
 vim.opt.termguicolors = true
+vim.opt.cursorline = true
+vim.opt.signcolumn = 'yes'
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
