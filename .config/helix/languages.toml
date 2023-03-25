@@ -1,0 +1,5 @@
+use-grammars = { only = ["toml", "json", "yaml", "c-sharp", "rust"] }
+
+[[language]]
+name = "c-sharp"
+language-server = { command = "dotnet", args = [ "/Users/george/.omnisharp/OmniSharp.dll", "--languageserver" ] }
