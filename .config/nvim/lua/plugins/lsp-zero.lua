@@ -13,6 +13,7 @@ return {
     {'hrsh7th/cmp-nvim-lsp'},            -- Required
     {'hrsh7th/cmp-buffer'},              -- Optional
     {'hrsh7th/cmp-path'},                -- Optional
+    {'hrsh7th/cmp-nvim-lsp-signature-help'},                -- Optional
     {'saadparwaiz1/cmp_luasnip'},        -- Optional
     {'hrsh7th/cmp-nvim-lua'},            -- Optional
     {'jose-elias-alvarez/null-ls.nvim'}, -- Optional
@@ -162,6 +163,7 @@ return {
       sources = {
         {name = 'path'},
         {name = 'nvim_lsp'},
+        {name = 'nvim_lsp_signature_help'},
         {name = 'buffer', keyword_length = 3},
         {name = 'luasnip', keyword_length = 2},
       },

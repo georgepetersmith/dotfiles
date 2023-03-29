@@ -1,23 +1,27 @@
 return {
-  'nvim-treesitter/nvim-treesitter',
-  build = ':TSUpdate',
-  dependencies = {
-    'nvim-treesitter/nvim-treesitter-textobjects',
+  "nvim-treesitter/nvim-treesitter",
+  dependencies = { "windwp/nvim-ts-autotag", "JoosepAlviste/nvim-ts-context-commentstring" },
+  cmd = {
+    "TSBufDisable",
+    "TSBufEnable",
+    "TSBufToggle",
+    "TSDisable",
+    "TSEnable",
+    "TSToggle",
+    "TSInstall",
+    "TSInstallInfo",
+    "TSInstallSync",
+    "TSModuleInfo",
+    "TSUninstall",
+    "TSUpdate",
+    "TSUpdateSync",
   },
-  config = {
-    ensure_installed = { "rust", "lua", "help", "javascript", "typescript", "c_sharp" },
-    sync_install = false,
-    auto_install = true,
-    highlight = {
-      enable = true,
-      disable = function(lang, buf)
-          local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
-              return true
-          end
-      end,
-      additional_vim_regex_highlighting = false,
-    },
-  }
+  build = ":TSUpdate",
+  opts = {
+    highlight = { enable = true },
+    incremental_selection = { enable = true },
+    autotag = { enable = true },
+    context_commentstring = { enable = true, enable_autocmd = false },
+  },
+  config = true
 }
