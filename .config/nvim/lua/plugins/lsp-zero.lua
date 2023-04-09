@@ -23,50 +23,14 @@ return {
     {'rafamadriz/friendly-snippets'}, -- Optional
   },
   config = function()
-    local lsp = require('lsp-zero')
+    local lsp = require('lsp-zero').preset({})
 
-    lsp.preset("recommended")
+    lsp.on_attach(function(client, bufnr)
+      lsp.default_keymaps({buffer = bufnr})
+    end)
 
-    lsp.ensure_installed({
-      'tsserver',
-      'rust_analyzer',
-    })
-
-    local cmp = require('cmp')
-    cmp.setup({
-      sources = {
-        {name = 'path'},
-        {name = 'nvim_lsp'},
-        {name = 'nvim_lsp_signature_help'},
-        {name = 'buffer', keyword_length = 3},
-        {name = 'luasnip', keyword_length = 2},
-      }
-    })
-
-    local cmp_select = {behavior = cmp.SelectBehavior.Select}
-    local cmp_mappings = lsp.defaults.cmp_mappings({
-      ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-      ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      ["<C-Space>"] = cmp.mapping.complete(),
-    })
-
-    cmp_mappings['<Tab>'] = nil
-    cmp_mappings['<S-Tab>'] = nil
-
-    lsp.setup_nvim_cmp({
-      mapping = cmp_mappings
-    })
-
-    lsp.set_preferences({
-      suggest_lsp_servers = false,
-      sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
-      }
-    })
+    -- (Optional) Configure lua language server for neovim
+    require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
     lsp.on_attach(function(client, bufnr)
       local opts = {buffer = bufnr, remap = false}
@@ -166,27 +130,7 @@ return {
 
     end)
 
-
-    local lspconfig = require('lspconfig')
-    -- (Optional) Configure lua language server for neovim
-    lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-
-    lspconfig.omnisharp.setup {
-      cmd = { "dotnet", "/Users/george/.omnisharp/OmniSharp.dll", "--languageserver" },
-      enable_editorconfig_support = true,
-      enable_ms_build_load_projects_on_demand = false,
-      enable_roslyn_analyzers = false,
-      organize_imports_on_format = false,
-      enable_import_completion = false,
-      sdk_include_prereleases = true,
-      analyze_open_documents_only = false,
-    }
-
     lsp.setup()
-
-    vim.diagnostic.config({
-      virtual_text = true
-    })
 
   end
 }
