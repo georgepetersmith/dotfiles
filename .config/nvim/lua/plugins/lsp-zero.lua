@@ -46,7 +46,20 @@ return {
     end)
 
     -- (Optional) Configure lua language server for neovim
-    require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+    local lspconfig = require('lspconfig')
+
+    lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+
+    lspconfig.omnisharp.setup {
+      cmd = { "dotnet", "/Users/george/.omnisharp/OmniSharp.dll", "--languageserver" },
+      enable_editorconfig_support = true,
+      enable_ms_build_load_projects_on_demand = false,
+      enable_roslyn_analyzers = false,
+      organize_imports_on_format = false,
+      enable_import_completion = false,
+      sdk_include_prereleases = true,
+      analyze_open_documents_only = false,
+    }
 
     lsp.on_attach(function(client, bufnr)
       local opts = {buffer = bufnr, remap = false}

@@ -19,6 +19,12 @@ return {
   build = ":TSUpdate",
   opts = {
     highlight = { enable = true },
+    ident = { enable = true },
+    rainbow = {
+      enable = true,
+      extended_mode = true,
+      max_file_lines = nil
+    },
     incremental_selection = { enable = true },
     autotag = { enable = true },
     context_commentstring = { enable = true, enable_autocmd = false },
