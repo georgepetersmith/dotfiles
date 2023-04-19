@@ -1,0 +1,9 @@
+env:
+  TERM: xterm-256color
+import:
+  - ~/.config/alacritty/gruvbox/gruvbox-dark.yml
+window:
+  decorations: buttonless
+font:
+  normal:
+    family: 'JetBrainsMono Nerd Font'
