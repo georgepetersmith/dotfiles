@@ -55,5 +55,16 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set nopaste"
 })
 
+-- Toggle relative numbers on for normal mode
+vim.api.nvim_create_autocmd("InsertEnter", {
+  pattern = '*',
+  command = "set norelativenumber"
+})
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = '*',
+  command = "set relativenumber"
+})
+
 -- Add asterisks in block comments
 vim.opt.formatoptions:append { 'r' }
