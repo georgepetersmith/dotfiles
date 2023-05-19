@@ -1,20 +1,13 @@
--- Unless you are still migrating, remove the deprecated commands from v1.x
 return {
-  "nvim-neo-tree/neo-tree.nvim",
-  cmd = 'Neotree',
-  branch = "v2.x",
-  keys = {
-    { '<leader>t', '<cmd>Neotree toggle<cr>', desc = 'NeoTree' },
-  },
+  "nvim-tree/nvim-tree.lua",
+  version = "*",
   dependencies = {
-    "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
-    "MunifTanjim/nui.nvim",
   },
-  config = {
-    filesystem = {
-      follow_current_file = true,
-      hijack_netrw_behavior = 'open_current',
-    }
-  }
+  keys = {
+      { '<leader>t', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree toggle' }
+  },
+  config = function()
+    require("nvim-tree").setup {}
+  end,
 }

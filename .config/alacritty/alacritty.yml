@@ -4,6 +4,7 @@ import:
   - ~/.config/alacritty/gruvbox/gruvbox-dark.yml
 window:
   decorations: buttonless
+  option_as_alt: OnlyLeft
 font:
   normal:
     family: 'JetBrainsMono Nerd Font'

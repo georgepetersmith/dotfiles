@@ -55,16 +55,36 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set nopaste"
 })
 
+-- local no_num_filetypes {
+--   'oil',
+--   'NvimTree',
+--   'TelescopePrompt',
+-- }
+
 -- Toggle relative numbers on for normal mode
 vim.api.nvim_create_autocmd("InsertEnter", {
   pattern = '*',
-  command = "set norelativenumber"
+  callback = function (ev)
+    if vim.bo.filetype == "TelescopePrompt" or vim.bo.filetype == "oil" then
+      vim.cmd('setlocal nonumber norelativenumber')
+      return
+    end
+    vim.cmd('setlocal number norelativenumber')
+  end
 })
 
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = '*',
-  command = "set relativenumber"
+  callback = function (ev)
+    if vim.bo.filetype == "TelescopePrompt" or vim.bo.filetype == "oil" then
+      vim.cmd('setlocal nonumber norelativenumber')
+      return
+    end
+    vim.cmd('setlocal nonumber relativenumber')
+  end
 })
+
+vim.cmd("autocmd FileType lua setlocal tabstop=2 shiftwidth=2")
 
 -- Add asterisks in block comments
 vim.opt.formatoptions:append { 'r' }

@@ -1,4 +1,4 @@
 return {
-  "morhetz/gruvbox",
+  "ellisonleao/gruvbox.nvim",
   priority = 1000
 }
