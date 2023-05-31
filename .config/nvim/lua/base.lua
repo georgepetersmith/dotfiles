@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd("InsertLeave", {
       vim.cmd('setlocal nonumber norelativenumber')
       return
     end
-    vim.cmd('setlocal nonumber relativenumber')
+    vim.cmd('setlocal number relativenumber')
   end
 })
 
