@@ -62,13 +62,30 @@
   :config
   (which-key-mode 1))
 
-(use-package autothemer :ensure t)
-(straight-use-package
- '(rose-pine-emacs
-   :host github
-   :repo "thongpv87/rose-pine-emacs"
-   :branch "master"))
-(load-theme 'rose-pine-color t)
+(use-package doom-themes
+  :ensure t
+  :config
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-gruvbox t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+;;(use-package autothemer :ensure t)
+;;(straight-use-package
+ ;;'(rose-pine-emacs
+   ;;:host github
+   ;;:repo "thongpv87/rose-pine-emacs"
+   ;;:branch "master"))
+;;(load-theme 'rose-pine-color t)
 
 (set-face-attribute 'default nil :font efs/default-font :height efs/default-font-size)
 (set-face-attribute 'fixed-pitch nil :font efs/default-font :height efs/default-font-size)
@@ -105,13 +122,19 @@
 
 (use-package docker-compose-mode)
 
-(use-package lsp-mode
+(use-package consult)
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  ;;:custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
   :init
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (csharp-mode . lsp)
-  (lsp-mode . lsp-enable-which-key-integration)
-  :commands lsp)
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/code")
+    (setq projectile-project-search-path '("~/code")))
+  (setq projectile-switch-project-action #'projectile-dired))
 
 ;; ORG mode
 (with-eval-after-load 'org
@@ -129,7 +152,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("6454421996f0508c38215a633256e36c19a28591542fb0946cfc40f1dceb89cf" "e9aa348abd3713a75f2c5ba279aa581b1c6ec187ebefbfa33373083ff8004c7c" default))
+   '("636b135e4b7c86ac41375da39ade929e2bd6439de8901f53f88fde7dd5ac3561" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "6454421996f0508c38215a633256e36c19a28591542fb0946cfc40f1dceb89cf" "e9aa348abd3713a75f2c5ba279aa581b1c6ec187ebefbfa33373083ff8004c7c" default))
  '(package-selected-packages '(no-littering)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
