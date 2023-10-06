@@ -76,3 +76,17 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(use-package! hydra
+  :defer
+  :config
+  (defhydra hydra/evil-window-resize (:color red)
+    "Resize window"
+    ("h" evil-window-decrease-width "decrease width")
+    ("j" evil-window-decrease-height "decrease height")
+    ("k" evil-window-increase-height "increase height")
+    ("l" evil-window-increase-width "increase width")
+    ("q" nil "quit")))
+(map! :leader
+      :prefix ("w" . "window")
+      :n "r" #'hydra/evil-window-resize/body)
