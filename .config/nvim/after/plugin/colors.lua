@@ -9,4 +9,4 @@ function ColorMyPencils(color)
     vim.api.nvim_set_hl(0, 'Operator', {bg = 'none'})
 end
 
-ColorMyPencils("rose-pine-dawn")
+ColorMyPencils("gruvbox")

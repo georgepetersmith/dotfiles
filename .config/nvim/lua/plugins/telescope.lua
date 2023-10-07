@@ -3,13 +3,10 @@ return {
   cmd = 'Telescope',
   lazy = false,
   tag = '0.1.1',
-  dependencies = { {'nvim-lua/plenary.nvim'},
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'  },
-    {'nvim-telescope/telescope-ui-select.nvim'}, },
-    -- opts = {
-  -- },
+  dependencies = {
+    {'nvim-lua/plenary.nvim'},
+    {'nvim-telescope/telescope-ui-select.nvim'},
+  },
   config = function()
     require('telescope').setup {
       file_ignore_patterns = { "node_modules" },
@@ -76,11 +73,10 @@ return {
     vim.keymap.set('n', '<leader>r', builtin.resume, {})
     vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
     vim.keymap.set('n', '<leader>S', builtin.lsp_dynamic_workspace_symbols, {})
-    vim.keymap.set('n', 'gr', builtin.lsp_references, {})
-    vim.keymap.set('n', 'gd', builtin.lsp_type_definitions, {})
+    -- vim.keymap.set('n', 'gr', builtin.lsp_references, {})
+    -- vim.keymap.set('n', 'gd', builtin.lsp_type_definitions, {})
     vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
 
-    require('telescope').load_extension('fzf')
     require("telescope").load_extension("ui-select")
   end,
 }
