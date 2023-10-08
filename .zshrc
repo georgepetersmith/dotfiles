@@ -4,6 +4,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 alias ls="exa"
 alias ll="exa -l"
+alias lla="exa -la"
 alias lt="exa -T"
 alias ltg="exa -T --git-ignore"
 alias x="xplr"
@@ -27,5 +28,9 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
 # ================
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 eval "$(zoxide init zsh)"
