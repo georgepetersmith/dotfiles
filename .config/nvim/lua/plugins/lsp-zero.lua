@@ -1,13 +1,13 @@
 return {
   'VonHeikemen/lsp-zero.nvim',
   branch = 'v2.x',
-  event = "VeryLazy",
+  event = { "BufReadPost", "BufNewFile" },
+  cmd = "Mason",
   dependencies = {
     -- LSP Support
     {'neovim/nvim-lspconfig'},             -- Required
     {'williamboman/mason.nvim'},           -- Optional
     {'williamboman/mason-lspconfig.nvim'}, -- Optional
-    {'j-hui/fidget.nvim', config = true},  -- Optional
 
     -- Autocompletion
     {'hrsh7th/nvim-cmp'},                -- Required
@@ -45,7 +45,7 @@ return {
       }
     })
 
-    lsp.on_attach(function(client, bufnr)
+    lsp.on_attach(function(_, bufnr)
       lsp.default_keymaps({buffer = bufnr})
     end)
 
@@ -54,7 +54,7 @@ return {
 
     lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
-    lsp.on_attach(function(client, bufnr)
+    lsp.on_attach(function(_, bufnr)
       local opts = {buffer = bufnr, remap = false}
 
       vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
