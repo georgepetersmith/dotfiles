@@ -2,11 +2,11 @@ eval "$(starship init zsh)"
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-alias ls="exa"
-alias ll="exa -l"
-alias lla="exa -la"
-alias lt="exa -T"
-alias ltg="exa -T --git-ignore"
+alias ls="eza"
+alias ll="eza -l"
+alias lla="eza -la"
+alias lt="eza -T"
+alias ltg="eza -T --git-ignore"
 alias x="xplr"
 alias cdx='z "$(xplr --print-pwd-as-result)"'
 alias cd="z"
