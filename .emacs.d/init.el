@@ -55,12 +55,15 @@
                 term-mode-hook
                 shell-mode-hook
                 treemacs-mode-hook
+		eat-mode
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package which-key
   :config
   (which-key-mode 1))
+
+(add-to-list 'default-frame-alist '(undecorated-round . t))
 
 (use-package doom-themes
   :ensure t
@@ -111,6 +114,17 @@
   (evil-escape-mode 1))
 
 ;; Programming
+
+(straight-use-package
+ '(eat :type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el"))))
+
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
 
