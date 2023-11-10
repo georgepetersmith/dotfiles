@@ -34,3 +34,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 eval "$(zoxide init zsh)"
+
+# ================
+
+[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/zsh"

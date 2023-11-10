@@ -4,6 +4,7 @@
 (defvar efs/default-variable-font "Helvetica")
 (defvar efs/default-variable-font-size 120)
 
+
 ;; Startup performance
 (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -38,6 +39,7 @@
 (use-package no-littering)
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+(setq make-backup-files nil) ; stop creating ~ files
 
 ;; UI
 (setq inhibit-startup-message t)
@@ -55,7 +57,7 @@
                 term-mode-hook
                 shell-mode-hook
                 treemacs-mode-hook
-		eat-mode
+		eat-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -65,30 +67,8 @@
 
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-gruvbox t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
-;;(use-package autothemer :ensure t)
-;;(straight-use-package
- ;;'(rose-pine-emacs
-   ;;:host github
-   ;;:repo "thongpv87/rose-pine-emacs"
-   ;;:branch "master"))
-;;(load-theme 'rose-pine-color t)
+(straight-use-package 'catppuccin-theme)
+(load-theme 'catppuccin :no-confirm)
 
 (set-face-attribute 'default nil :font efs/default-font :height efs/default-font-size)
 (set-face-attribute 'fixed-pitch nil :font efs/default-font :height efs/default-font-size)
@@ -106,12 +86,6 @@
   :after evil
   :config
   (evil-collection-init))
-
-(use-package evil-escape
-  :config
-  (setq evil-escape-unordered-key-sequence t)
-  (setq-default evil-escape-key-sequence "jk")
-  (evil-escape-mode 1))
 
 ;; Programming
 
