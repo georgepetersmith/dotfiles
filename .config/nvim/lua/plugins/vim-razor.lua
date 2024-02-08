@@ -1,4 +1,1 @@
-return {
-  "jlcrochet/vim-razor",
-  event = "VeryLazy"
-}
+return { 'jlcrochet/vim-razor', ft = { 'razor', 'cshtml' } }
