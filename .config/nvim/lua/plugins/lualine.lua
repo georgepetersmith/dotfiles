@@ -1,5 +1,16 @@
 return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = true
+    opts = {
+        options = {
+            component_separators = '',
+            section_separators = { left = '', right = ''},
+        },
+        extensions = {
+            'quickfix',
+            'trouble',
+            'lazy',
+            'mason',
+        }
+    }
 }
