@@ -11,6 +11,8 @@ return {
                 vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', opts)
                 vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<cr>', opts)
                 vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
+                vim.keymap.set('n', '<leader>.', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                vim.keymap.set('n', '<leader>n', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
             end)
         end,
         dependencies = {
