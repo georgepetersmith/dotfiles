@@ -11,14 +11,34 @@ return {
                 vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', opts)
                 vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<cr>', opts)
                 vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
-                vim.keymap.set('n', '<leader>.', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-                vim.keymap.set('n', '<leader>n', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                vim.keymap.set('n', '<leader>i', '<cmd>Lspsaga finder<cr>', opts)
+                vim.keymap.set('n', '<leader>.', '<cmd>Lspsaga code_action<cr>', opts)
+                vim.keymap.set('n', '<leader>n', '<cmd>Lspsaga rename ++project<cr>', opts)
             end)
         end,
         dependencies = {
             { 'neovim/nvim-lspconfig' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/nvim-cmp' },
+            {
+                'hrsh7th/nvim-cmp',
+                dependencies = {
+                    { 'hrsh7th/cmp-nvim-lsp' },
+                    { 'onsails/lspkind.nvim' },
+                },
+                config = function ()
+                    local cmp = require('cmp')
+                    local lspkind = require('lspkind')
+                    cmp.setup {
+                        formatting = {
+                            format = lspkind.cmp_format({
+                                mode = 'symbol',
+                                maxwidth = 50,
+                                ellipsis_char = '...',
+                                show_labelDetails = true,
+                            })
+                        }
+                    }
+                end
+            },
             { 'L3MON4D3/LuaSnip' },
             { 'williamboman/mason.nvim', config = true },
             {
@@ -36,6 +56,17 @@ return {
                     })
                 end
             },
+            {
+                'nvimdev/lspsaga.nvim',
+                opts = {
+                    lightbulb = {
+                        enable = false
+                    },
+                    symbol_in_winbar = {
+                        enable = false
+                    }
+                }
+            }
         }
     },
 }
