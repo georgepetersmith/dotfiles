@@ -41,7 +41,7 @@ return {
         priority = 1000,
         name = 'catppuccin',
         config = function ()
-            vim.cmd([[colorscheme catppuccin-latte]])
+            vim.cmd([[colorscheme catppuccin-mocha]])
         end
 
     }
