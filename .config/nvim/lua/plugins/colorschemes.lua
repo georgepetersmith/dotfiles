@@ -12,7 +12,7 @@ return {
                 devicons = true
             })
 
-            vim.cmd([[colorscheme monokai-pro]])
+            vim.cmd("colorscheme monokai-pro")
         end
     },
     {
@@ -22,7 +22,7 @@ return {
         priority = 1000,
         config = function ()
             require('solarized-osaka').setup({transparent = false})
-            vim.cmd([[colorscheme solarized-osaka]])
+            vim.cmd("colorscheme solarized-osaka")
         end
     },
     {
@@ -32,17 +32,30 @@ return {
         priority = 1000,
         config = function()
             require('NeoSolarized').setup({ style = "light", transparent = false })
-            vim.cmd([[colorscheme NeoSolarized]])
+            vim.cmd("colorscheme NeoSolarized")
         end
     },
     {
         'catppuccin/nvim',
+        enabled = false,
         lazy = false,
         priority = 1000,
         name = 'catppuccin',
         config = function ()
-            vim.cmd([[colorscheme catppuccin-mocha]])
+            vim.cmd("colorscheme catppuccin-mocha")
         end
 
-    }
+    },
+    {
+        'nyoom-engineering/oxocarbon.nvim',
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.opt.background = "dark" -- set this to dark or light
+            vim.cmd("colorscheme oxocarbon")
+
+            --[[ vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" }) ]]
+        end
+    },
 }
