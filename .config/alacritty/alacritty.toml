@@ -1,0 +1,11 @@
+import = ["~/.config/alacritty/rose-pine/rose-pine-moon.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+
+[window]
+decorations = "buttonless"
+option_as_alt = "OnlyLeft"
