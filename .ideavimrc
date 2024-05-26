@@ -1,0 +1,36 @@
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+let mapleader = " "
+
+map <leader>f <Action>(GotoFile)
+
+map <leader>d <Action>(Debug)
+map <leader>r <Action>(RenameElement)
+map <leader>c <Action>(Stop)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader>s <Action>(SelectInProjectView)
+map <leader>a <Action>(Annotate)
+map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+map <S-Space> <Action>(GotoNextError)
+
+map <leader>b <Action>(ToggleLineBreakpoint)
+map <leader>o <Action>(FileStructurePopup)
+
+map gh <Action>(ShowErrorDescription)
+map gi <Action>(ShowHoverInfo)
+
+map <leader>w <C-w>
+map <C-w>o <Action>(CloseEditorsGroup)
+map <C-w>O <Action>(HideAllWindows)
+
+imap kj <Esc>
+
