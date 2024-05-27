@@ -1,5 +1,3 @@
-" Show a few lines of context around the cursor. Note that this makes the
-" text scroll if you mouse-click near the start or end of the window.
 set scrolloff=5
 
 " Do incremental searching.
@@ -11,9 +9,12 @@ map Q gq
 let mapleader = " "
 
 map <leader>f <Action>(GotoFile)
+map <leader>/ <Action>(FindInPath)
+map <leader>. <Action>(QuickActions)
 
 map <leader>d <Action>(Debug)
-map <leader>r <Action>(RenameElement)
+map <leader>D <Action>(Run)
+map <leader>n <Action>(RenameElement)
 map <leader>c <Action>(Stop)
 map <leader>z <Action>(ToggleDistractionFreeMode)
 
@@ -27,10 +28,14 @@ map <leader>o <Action>(FileStructurePopup)
 
 map gh <Action>(ShowErrorDescription)
 map gi <Action>(ShowHoverInfo)
+map gr <Action>(FindUsages)
+map gi <Action>(GotoImplementation)
+map gt <Action>(GotoTest)
 
 map <leader>w <C-w>
 map <C-w>o <Action>(CloseEditorsGroup)
 map <C-w>O <Action>(HideAllWindows)
+map <C-w>t <Action>(ActivateTerminalToolWindow)
 
 imap kj <Esc>
 
