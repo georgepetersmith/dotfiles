@@ -73,12 +73,23 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', config = true, event = 'BufEnter' },
   {
       'rose-pine/neovim',
+      enabled = false,
       name = 'rose-pine',
       priority = 1000,
       config = function()
           require('rose-pine').setup({})
-          vim.cmd('colorscheme rose-pine-moon')
+          vim.cmd('colorscheme rose-pine-dawn')
       end
+  },
+  {
+    'catppuccin/nvim',
+    enabled = true,
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+        require('catppuccin').setup({})
+        vim.cmd('colorscheme catppuccin-latte')
+    end
   },
   {
     'morhetz/gruvbox',
