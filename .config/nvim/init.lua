@@ -78,7 +78,7 @@ require('lazy').setup({
       priority = 1000,
       config = function()
           require('rose-pine').setup({})
-          vim.cmd('colorscheme rose-pine-dawn')
+          vim.cmd('colorscheme rose-pine-moon')
       end
   },
   {
@@ -88,7 +88,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
         require('catppuccin').setup({})
-        vim.cmd('colorscheme catppuccin-latte')
+        vim.cmd('colorscheme catppuccin-mocha')
     end
   },
   {
@@ -176,5 +176,9 @@ require('lazy').setup({
             indent = { enable = true },
           })
       end
+  },
+  {
+    'stevearc/oil.nvim',
+    config = true
   }
 })
