@@ -83,7 +83,7 @@ require('lazy').setup({
   },
   {
     'catppuccin/nvim',
-    enabled = true,
+    enabled = false,
     name = 'catppuccin',
     priority = 1000,
     config = function()
@@ -101,6 +101,30 @@ require('lazy').setup({
       vim.g.gruvbox_contrast_dark = 'hard'
       vim.cmd('colorscheme gruvbox')
     end
+  },
+  {
+    'craftzdog/solarized-osaka.nvim',
+    enabled = true,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('solarized-osaka').setup({
+        transparent = false
+      })
+
+      vim.cmd('colorscheme solarized-osaka')
+    end
+  },
+  {
+    'maxmx03/solarized.nvim',
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.o.background = 'dark' -- or 'light'
+
+      vim.cmd.colorscheme 'solarized'
+    end,
   },
   {
     'ibhagwan/fzf-lua',
