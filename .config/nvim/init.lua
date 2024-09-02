@@ -34,6 +34,7 @@ vim.opt.sidescrolloff = 10
 vim.opt.completeopt = { 'menuone', 'noselect' }
 vim.opt.termguicolors = true
 vim.opt.spell = true
+vim.opt.spelloptions = 'camel'
 vim.opt.spelllang = 'en_gb'
 vim.opt.signcolumn = 'yes'
 vim.cmd('filetype plugin on')
@@ -72,58 +73,42 @@ require('lazy').setup({
   },
   { 'numToStr/Comment.nvim', config = true, event = 'BufEnter' },
   {
-      'rose-pine/neovim',
-      enabled = false,
-      name = 'rose-pine',
-      priority = 1000,
-      config = function()
-          require('rose-pine').setup({})
-          vim.cmd('colorscheme rose-pine-moon')
-      end
-  },
-  {
-    'catppuccin/nvim',
+    'rose-pine/neovim',
     enabled = false,
-    name = 'catppuccin',
+    name = 'rose-pine',
     priority = 1000,
     config = function()
-        require('catppuccin').setup({})
-        vim.cmd('colorscheme catppuccin-mocha')
+      require('rose-pine').setup({})
+      vim.cmd('colorscheme rose-pine-moon')
     end
   },
   {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = true,
+  },
+  {
     'morhetz/gruvbox',
-    enabled = false,
     priority = 1000,
     config = function()
       vim.opt.background = 'dark'
       vim.g.gruvbox_italic = 1
       vim.g.gruvbox_contrast_dark = 'hard'
-      vim.cmd('colorscheme gruvbox')
     end
   },
   {
     'craftzdog/solarized-osaka.nvim',
-    enabled = true,
     lazy = false,
     priority = 1000,
-    config = function()
-      require('solarized-osaka').setup({
-        transparent = false
-      })
-
-      vim.cmd('colorscheme solarized-osaka')
-    end
+    opts = { transparent = false },
   },
   {
     'maxmx03/solarized.nvim',
-    enabled = false,
     lazy = false,
     priority = 1000,
     config = function()
       vim.o.background = 'dark' -- or 'light'
-
-      vim.cmd.colorscheme 'solarized'
     end,
   },
   {
@@ -134,6 +119,7 @@ require('lazy').setup({
       { '<leader>/', '<cmd>FzfLua live_grep<cr>' },
       { '<leader>b', '<cmd>FzfLua buffers<cr>' },
       { '<leader>h', '<cmd>FzfLua help_tags<cr>' },
+      { '<leader>t', '<cmd>FzfLua tabs<cr>' },
       { '<leader>;', '<cmd>FzfLua resume<cr>' },
     }
   },
@@ -190,19 +176,33 @@ require('lazy').setup({
     end,
   },
   {
-      'nvim-treesitter/nvim-treesitter',
-      build = ':TSUpdate',
-      config = function ()
-          local configs = require('nvim-treesitter.configs')
-          configs.setup({
-            sync_install = false,
-            highlight = { enable = true },
-            indent = { enable = true },
-          })
-      end
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        ensure_installed = { "lua", "vimdoc", "markdown", "markdown_inline", "c_sharp", "html", "typescript", "rust", "just", "dockerfile", "css", "sql" },
+        indent = { enable = true },
+      }
+    end,
   },
   {
     'stevearc/oil.nvim',
-    config = true
+    opts = {
+      default_file_explorer = true,
+      delete_to_trash = true,
+      skip_confirm_for_simple_edits = true,
+      view_options = {
+        show_hidden = true,
+        natural_order = true,
+        is_always_hidden = function(name, _)
+          return name == '..' or name == '.git'
+        end,
+        win_options = {
+          wrap = true,
+        }
+      },
+    }
   }
 })
+
+vim.cmd('colorscheme catppuccin-mocha')
