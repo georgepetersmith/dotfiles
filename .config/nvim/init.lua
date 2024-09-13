@@ -112,15 +112,32 @@ require('lazy').setup({
     end,
   },
   {
-    'ibhagwan/fzf-lua',
-    config = true,
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.8',
+    opts = {
+      defaults = {
+        layout_config = {
+          vertical = { width = 0.5 }
+        }
+      },
+      pickers = {
+        find_files = {
+          theme = 'dropdown',
+          previewer = false
+        }
+      }
+    },
     keys = {
-      { '<leader>f', '<cmd>FzfLua files<cr>' },
-      { '<leader>/', '<cmd>FzfLua live_grep<cr>' },
-      { '<leader>b', '<cmd>FzfLua buffers<cr>' },
-      { '<leader>h', '<cmd>FzfLua help_tags<cr>' },
-      { '<leader>t', '<cmd>FzfLua tabs<cr>' },
-      { '<leader>;', '<cmd>FzfLua resume<cr>' },
+      { '<leader>f', '<cmd>Telescope find_files<cr>' },
+      { '<leader>/', '<cmd>Telescope live_grep<cr>' },
+      { '<leader>b', '<cmd>Telescope buffers<cr>' },
+      { '<leader>h', '<cmd>Telescope help_tags<cr>' },
+      { '<leader>;', '<cmd>Telescope resume<cr>' },
+      { 'gr', '<cmd>Telescope lsp_references<cr>' },
+      { '<leader>s', '<cmd>Telescope lsp_document_symbols<cr>' },
+      { '<leader>S', '<cmd>Telescope lsp_workspace_symbols<cr>' },
+      { '<leader>d', '<cmd>Telescope lsp_document_diagnostics<cr>' },
+      { 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>' }
     }
   },
   {
@@ -154,15 +171,8 @@ require('lazy').setup({
         vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
         vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
         vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-        vim.keymap.set('n', 'gr', '<cmd>FzfLua lsp_references<cr>', opts)
-        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
         vim.keymap.set('n', '<leader>n', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
         vim.keymap.set('n', '<leader>.', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-        vim.keymap.set('n', '<leader>i', '<cmd>FzfLua lsp_finder<cr>', opts)
-        vim.keymap.set('n', '<leader>s', '<cmd>FzfLua lsp_document_symbols<cr>', opts)
-        vim.keymap.set('n', '<leader>S', '<cmd>FzfLua lsp_workspace_symbols<cr>', opts)
-        vim.keymap.set('n', '<leader>d', '<cmd>FzfLua lsp_document_diagnostics<cr>', opts)
-        vim.keymap.set('n', '<leader>D', '<cmd>FzfLua lsp_workspace_diagnostics<cr>', opts)
       end)
 
       require('mason').setup({})
