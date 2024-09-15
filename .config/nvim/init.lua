@@ -116,6 +116,7 @@ require('lazy').setup({
     tag = '0.1.8',
     opts = {
       defaults = {
+        path_display = { 'smart' },
         layout_config = {
           vertical = { width = 0.5 }
         }
