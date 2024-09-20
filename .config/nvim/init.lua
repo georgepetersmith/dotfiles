@@ -1,8 +1,6 @@
 vim.g.mapleader = " "
-vim.g.netrw_banner = 0
-vim.g.netrw_browse_split = 4
-vim.g.netrw_altv = 1
-vim.g.netrw_liststyle = 3
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.title = true
@@ -37,6 +35,7 @@ vim.opt.spell = true
 vim.opt.spelloptions = 'camel'
 vim.opt.spelllang = 'en_gb'
 vim.opt.signcolumn = 'yes'
+vim.opt.showmode = false
 vim.cmd('filetype plugin on')
 
 vim.keymap.set('n', '<leader>w', '<C-w>')
@@ -252,6 +251,27 @@ require('lazy').setup({
       vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
       vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
     end
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        disabled_filetypes = { 'packer', 'NvimTree' }
+      }
+    }
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = true,
+    keys = {
+      { '<C-t>', '<cmd>NvimTreeOpen<cr>' },
+    }
   }
 })
 
