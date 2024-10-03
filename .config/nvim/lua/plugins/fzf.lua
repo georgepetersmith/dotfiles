@@ -1,7 +1,13 @@
 return {
   "ibhagwan/fzf-lua",
-  enabled = false,
-  config = true,
+  opts = {
+    {"max-perf"},
+    previewers = {
+      bat = {
+        theme = "gruvbox-dark"
+      }
+    }
+  },
   keys = {
     { '<leader>f', '<cmd>FzfLua files<cr>' },
     { '<leader>/', '<cmd>FzfLua live_grep<cr>' },

@@ -4,7 +4,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.title = true
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1
 vim.opt.cursorline = true
 vim.opt.path:append { '**' }
 vim.opt.syntax = 'ON'
@@ -39,6 +39,23 @@ vim.opt.showmode = false
 vim.opt.belloff = 'all'
 vim.cmd('filetype plugin on')
 
+local has = function(x)
+  return vim.fn.has(x) == 1
+end
+
+local is_mac = has "macunix"
+local is_windows = has "win32"
+
+if is_mac then
+  require("macos")
+end
+if is_windows then
+  require("windows")
+end
+
+vim.cmd("colorscheme retrobox")
+vim.opt.background = "dark"
+
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
@@ -64,8 +81,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   spec = {
     import = "plugins"
-  }
+  },
+  install = { colorscheme = { "retrobox" } },
+  checker = { enabled = false }
 })
 
-vim.cmd('colorscheme retrobox')
-vim.opt.background = 'dark'
