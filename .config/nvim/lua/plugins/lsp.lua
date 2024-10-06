@@ -6,22 +6,32 @@ return {
     {'hrsh7th/cmp-nvim-lsp'},
     {'hrsh7th/cmp-path'},
     {'hrsh7th/nvim-cmp'},
-    {'L3MON4D3/LuaSnip'},
+    {'saadparwaiz1/cmp_luasnip'},
+    {'L3MON4D3/LuaSnip', opts = {}, dependencies = { 'rafamadriz/friendly-snippets' }},
     {'williamboman/mason.nvim'},
     {'williamboman/mason-lspconfig'},
+    {'seblj/roslyn.nvim', ft = 'cs' },
   },
   config = function ()
     local lsp_zero = require('lsp-zero')
 
-    lsp_zero.on_attach(function(client, bufnr)
-      lsp_zero.default_keymaps({buffer = bufnr})
+    local lsp_attach = function(_, bufnr)
+      local opts = {buffer = bufnr}
+      lsp_zero.default_keymaps(opts)
       vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
       vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
       vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
       vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
       vim.keymap.set('n', '<leader>n', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
       vim.keymap.set('n', '<leader>.', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-    end)
+    end
+
+    lsp_zero.extend_lspconfig({
+      lsp_attach = lsp_attach,
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    })
+
+    require('roslyn').setup({ on_attach = lsp_attach })
 
     require('mason').setup({})
     require('mason-lspconfig').setup({
@@ -47,7 +57,6 @@ return {
       mapping = cmp.mapping.preset.insert({
         ['<C-f>'] = cmp_action.luasnip_jump_forward(),
         ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-        ['<C-Space>'] = cmp.mapping.complete(),
       }),
       snippet = {
         expand = function(args)
