@@ -53,9 +53,6 @@ if is_windows then
   require("windows")
 end
 
-vim.cmd("colorscheme retrobox")
-vim.opt.background = "dark"
-
 vim.keymap.set('n', '<leader>w', '<C-w>')
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
@@ -86,3 +83,7 @@ require('lazy').setup({
   checker = { enabled = false }
 })
 
+
+if vim.g.neovide then
+  vim.o.guifont = "JetbrainsMono Nerd Font:h10" -- text below applies for VimScript
+end
