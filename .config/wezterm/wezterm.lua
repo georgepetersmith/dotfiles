@@ -2,10 +2,13 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 config.default_prog = { 'pwsh', '-NoLogo' }
-config.color_scheme = 'Catppuccin Latte'
+config.color_scheme = 'GruvboxDarkHard'
 config.enable_scroll_bar = false
 
-config.leader = { key="b", mods="CTRL" }
+config.font = wezterm.font 'JetBrainsMono NF'
+config.font_size = 11
+
+config.leader = { key=",", mods="CTRL" }
 config.hide_tab_bar_if_only_one_tab = true
 config.keys = {
   { key = "a", mods = "LEADER|CTRL",  action=wezterm.action{SendString="\x01"}},
