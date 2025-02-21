@@ -1,41 +1,154 @@
+" To get a list of Actions run `:actionlist `
+let mapleader = "\<SPACE>"
+
+set ignorecase smartcase
+set NERDTree
+set hlsearch
+set showmode
 set scrolloff=5
-
-" Do incremental searching.
+set history=1000
+set surround
 set incsearch
+set relativenumber
+set number
+set smartcase
+set hlsearch
+set visualbell
+set noerrorbells
+set easymotion
+set commentary
+set ideajoin
+set exchange
+set multiple-cursors
+set sneak
 
-" Don't use Ex mode, use Q for formatting.
-map Q gq
+map gw <Action>(AceAction)
+map gW <Action>(AceTargetAction)
+map gv <Action>(AceLineAction)
 
-let mapleader = " "
+" To copy text to the end-of-line, press Y.
+" This mapping sets up Y to be consistent with
+" the C and D operators, which act from the cursor
+" to the end of the line. The default behavior of Y
+" is to yank the whole line.
+nnoremap Y y$
 
-map <leader>f <Action>(GotoFile)
-map <leader>/ <Action>(FindInPath)
-map <leader>. <Action>(QuickActions)
-
-map <leader>d <Action>(Debug)
-map <leader>D <Action>(Run)
-map <leader>n <Action>(RenameElement)
-map <leader>c <Action>(Stop)
-map <leader>z <Action>(ToggleDistractionFreeMode)
-
-map <leader>s <Action>(SelectInProjectView)
-map <leader>a <Action>(Annotate)
-map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
-map <S-Space> <Action>(GotoNextError)
-
-map <leader>b <Action>(ToggleLineBreakpoint)
-map <leader>o <Action>(FileStructurePopup)
-
-map gh <Action>(ShowErrorDescription)
-map gi <Action>(ShowHoverInfo)
-map gr <Action>(FindUsages)
-map gi <Action>(GotoImplementation)
-map gt <Action>(GotoTest)
-
-map <leader>w <C-w>
-map <C-w>o <Action>(CloseEditorsGroup)
-map <C-w>O <Action>(HideAllWindows)
-map <C-w>t <Action>(ActivateTerminalToolWindow)
-
+" Shortcut for escape
+imap jj <Esc>
+imap jk <Esc>
 imap kj <Esc>
 
+" Quick window navigation
+map <leader>wj <C-W>j
+map <leader>wk <C-W>k
+map <leader>wh <C-W>h
+map <leader>wl <C-W>l
+map <leader>wL :action NextSplitter<CR>
+map <leader>wH :action PrevSplitter<CR>
+
+map <S-l> gt
+map <S-h> gT
+
+" noremap K :action ShowHoverInfo<CR>
+noremap <leader>k :action ShowErrorDescription<CR>
+
+" Shortcut for copying to/from System Clipboard
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>P "+P
+
+" Greatest remap EVER!! 
+" Let me explain, this remap while in visual mode
+" will delete what is currently highlighted and replace it 
+" with what is in the register BUT it will YANK (delete) it 
+" to a VOID register. Meaning I still have what I originally had
+" when I pasted. I don't loose the previous thing I YANKED!
+vnoremap <leader>p "_dP
+
+" Splitting Windows
+nmap <Leader>wv :vsplit<CR>
+nmap <Leader>ws :split<CR>
+nmap <Leader>wo :action CloseAllEditorsButActive<CR>
+nmap <Leader>wc :action CloseEditor<CR>
+nmap <Leader>wC :action CloseAllEditors<CR>
+
+nnoremap <C-Up> :action StretchSplitToTop<CR>
+nnoremap <C-Down> :action StretchSplitToBottom<CR>
+nnoremap <C-Left> :action StretchSplitToLeft<CR>
+nnoremap <C-Right> :action StretchSplitToRight<CR>
+
+nmap <leader>s :action FileStructurePopup<CR>
+
+" Project Shortcuts
+" =================
+" Close Project
+
+" Some Action commands to memic my native vim
+" For a list of :action try :actionlist
+" ===========================================
+" Hide open panels
+nmap <Leader>ww :action HideAllWindows<CR>
+
+" Open Global Find Dialog box
+nmap <Leader>/ :action FindInPath<CR>
+
+" Open Terminal
+nmap <Leader>t :action ActivateTerminalToolWindow<CR>
+
+" Open recent project dialog box
+nmap <Leader><Leader>m :action ManageRecentProjects<CR>
+
+" Mapping to mimic BufferExplorer
+nmap <Leader>b :action RecentFiles<CR>
+nmap <Leader>f :action GotoFile<CR>
+"nmap gi :action GotoImplementation<CR>
+nmap ]d :action GotoNextError<CR>
+nmap [d :action GotoPreviousError<CR>
+
+" Nerdtree want to be
+" nmap <Leader>e :action ActivateProjectToolWindow<CR>
+nmap <Leader>e :NERDTreeToggle<CR>
+nmap <Leader>E :action ViewInSolutionExplorer<CR>
+
+" Toggle ToggleDistractionFreeMode
+nmap <Leader>zd :action ToggleDistractionFreeMode<CR>
+nmap <Leader>zz :action ToggleZenMode<CR>
+
+" Quick Quit
+nnoremap <leader>q :q <CR>
+
+"Coding Formating
+" ===============
+nnoremap <leader>= :action ReformatCode<CR>
+
+" XDebug Shortcuts
+nmap <Leader>dd :action ToggleLineBreakpoint<CR>
+" Jump to Source
+nmap <C>] :action XDebugger.JumpToSource
+
+" Commenting
+nmap <Leader>cc :action CommentByLineComment<CR>
+nmap <Leader>cb :action CommentByBlockComment<CR>
+nmap <Leader>c<Space> :action CommentByLineComment<CR>
+nmap <Leader>cb<Space> :action CommentByBlockComment<CR>
+
+" Refactoring
+nmap <Leader>rt :action Refactorings.QuickListPopupAction<CR>
+"nmap csw' :action Macro.surround_with_single_quote<CR>
+
+" Move visual block
+vnoremap J :m '>+1<CR>
+" xnoremap K :m '<-2<CR>
+vnoremap K :m '<-2<CR>
+
+" Put search results in the middle of the screen
+nnoremap n nzz
+nnoremap N Nzz
+
+" Shortcut for copying to/from System Clipboard
+"" Copy (Yank)
+vmap <Leader>y "+y
+"" Cute
+vmap <Leader>d "+d
+"" Paste
+nmap <Leader>P "+p
