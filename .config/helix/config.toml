@@ -1,25 +1,19 @@
-theme = "gruvbox"
+theme = "base16_transparent"
 
 [editor]
-line-number = "relative"
-mouse = false
+popup-border = "all"
+auto-info = false
 
-[editor.soft-wrap]
-enable = true
-
-[editor.cursor-shape]
-insert = "bar"
-normal = "block"
-select = "underline"
-
-[editor.file-picker]
-hidden = false
-
-[editor.lsp]
-display-messages = true
-
-[editor.indent-guides]
-render = true
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "error"
 
 [keys.normal]
-G = "goto_file_end"
+C-g = [
+    ":write-all",
+    ":new",
+    ":insert-output lazygit",
+    ":buffer-close!",
+    ":redraw",
+    ":reload-all"
+]

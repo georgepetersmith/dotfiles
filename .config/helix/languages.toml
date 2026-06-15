@@ -1,5 +1,35 @@
-use-grammars = { only = ["toml", "json", "yaml", "c-sharp", "rust"] }
-
 [[language]]
 name = "c-sharp"
-language-server = { command = "dotnet", args = [ "/Users/george/.omnisharp/OmniSharp.dll", "--languageserver" ] }
+language-servers = ["csharp-ls"]
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "dotnet", args = ["format", "--include"] }
+
+[language-server.eslint]
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+
+[[language]]
+name = "typescript"
+formatter = { command = 'prettier', args = [
+  "--write",
+  "--parser",
+  "typescript",
+] }
+auto-format = true
+language-servers = ["typescript-language-server", "angular", "eslint"]
+
+[[language]]
+name = "html"
+formatter = { command = 'prettier', args = ["--write", "--parser", "html"] }
+auto-format = true
+language-servers = ["vscode-html-language-server", "angular"]
+
+[language-server.angular]
+command = "ngserver"
+args = [
+  "--stdio",
+  "--tsProbeLocations",
+  "$(npm -g root)",
+  "--ngProbeLocations",
+  "$(npm -g root)",
+]
