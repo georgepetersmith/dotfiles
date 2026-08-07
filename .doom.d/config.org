@@ -1,0 +1,162 @@
+#+title: Config
+
+#+BEGIN_SRC emacs-lisp
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;;
+(setenv "PATH" (concat "C:/Program Files/Git/usr/bin;" (getenv "PATH")))
+(setq exec-path (cons "C:/Program Files/Git/usr/bin" exec-path))
+
+(setq doom-theme 'modus-operandi-tinted)
+
+;; in $DOOMDIR/config.el
+(setq doom-font (font-spec :family "JetBrainsMono NF" :size 12 :weight 'light)
+      doom-symbol-font (font-spec :family "JetBrainsMono NF")
+      doom-big-font (font-spec :family "JetBrainsMono NF" :size 24))
+
+(setq display-line-numbers-type t)
+
+(setq org-directory "~/org/")
+#+END_SRC
+
+* Fix Consult Ripgrep
+In windows, it looks like executing ripgrep in quick succession causes the process to suspend, freezing emacs as a result.
+This implements a debounce and throttle to allow the previous ripgrep process to terminate before the next one starts.
+#+BEGIN_SRC elisp
+(after! consult
+  (when IS-WINDOWS
+    (setq consult-async-input-debounce 0.3
+          consult-async-input-throttle 0.5
+          consult-async-refresh-delay 0.2)))
+#+END_SRC
+
+* Evil modifications
+I want my cursor to jump to new splits, rather than remaining in the original window
+#+BEGIN_SRC elisp
+(after! evil
+  (setq evil-vsplit-window-right t
+        evil-split-window-below t))
+#+END_SRC
+
+* Jira
+#+BEGIN_SRC elisp
+(use-package! jira
+  :config
+  (setq jira-base-url (getenv "JIRA_BASE_URL"))
+  (setq jira-token (getenv "JIRA_TOKEN"))
+  (setq jira-username (getenv "JIRA_USERNAME"))
+  (setq jira-token-is-personal-access-token nil)
+  (setq jira-api-version 3))
+#+END_SRC
+
+* Agent Shell
+#+BEGIN_SRC elisp
+(use-package! acp)
+(use-package! agent-shell
+  :config
+  (setq agent-shell-show-welcome-message nil)
+  ;; Global key bindings (SPC A prefix) - available from any buffer
+  (map! :leader
+        (:prefix-map ("A" . "agent-shell")
+         :desc "Start/switch to agent shell"                    "A" #'agent-shell
+         :desc "Send current file"                              "f" #'agent-shell-send-current-file
+         :desc "Send other file"                              "F" #'agent-shell-send-other-file
+         :desc "Agent shell help menu"                          "h" #'agent-shell-help-menu
+         :desc "Add region to agent shell"                      "r" #'agent-shell-add-region
+         :desc "Toggle agent shell visibility"                  "t" #'agent-shell-toggle
+         :desc "Toggle logging"                                 "T" #'agent-shell-toggle-logging
+
+         ;; Start specific agents (SPC A s prefix)
+         (:prefix ("s" . "start agent")
+          :desc "Start Claude Code"                             "c" #'agent-shell-anthropic-start-claude-code
+          :desc "Start Pi"                            "p" #'agent-shell-pi-start-agent
+          :desc "Start Gemini"                                  "g" #'agent-shell-google-start-gemini
+          :desc "Start Goose"                                   "o" #'agent-shell-goose-start-agent
+          :desc "Start Codex (OpenAI)"                          "x" #'agent-shell-openai-start-codex
+          :desc "Start OpenCode"                                "O" #'agent-shell-opencode-start-agent
+          :desc "Start Qwen"                                    "q" #'agent-shell-qwen-start)
+         ;; Debugging/logging (SPC A d prefix)
+         (:prefix ("d" . "debug")
+
+                  )))
+
+  ;; Local leader key bindings (SPC m prefix) - only in agent-shell buffers
+  (map! :map agent-shell-mode-map
+        :localleader
+        :desc "Agent shell help menu"                          "?" #'agent-shell-help-menu
+        :desc "Insert shell command output"                    "!" #'agent-shell-insert-shell-command-output
+        :desc "Cycle session mode"                             "m" #'agent-shell-cycle-session-mode
+        :desc "Set session mode"                               "M" #'agent-shell-set-session-mode
+        :desc "Clear buffer"                                   "C" #'agent-shell-clear-buffer
+        :desc "Interrupt agent"                                "c" #'agent-shell-interrupt
+        :desc "Delete interaction"                             "d" #'agent-shell-delete-interaction-at-point
+        :desc "Search history"                                 "/" #'agent-shell-search-history
+        :desc "Insert file"                                    "f" #'agent-shell-insert-file
+        :desc "New shell"                                      "n" #'agent-shell-new-shell
+        :desc "Jump to permission row"                         "p" #'agent-shell-jump-to-latest-permission-button-row
+        :desc "Rename buffer"                                  "R" #'agent-shell-rename-buffer
+        :desc "Toggle completion"                              "t" #'agent-shell-completion-mode
+        (:prefix ("L" . "logging")
+         :desc "View ACP logs"                                 "l" #'agent-shell-view-acp-logs
+         :desc "Reset logs"                                    "r" #'agent-shell-reset-logs
+         :desc "Toggle logging"                                "t" #'agent-shell-toggle-logging
+         :desc "View traffic"                                  "v" #'agent-shell-view-traffic)
+        (:prefix ("T" . "transcript")
+         :desc "Save transcript"                               "s" #'agent-shell-save-session-transcript
+         :desc "Restore transcript"                            "r" #'agent-shell-restore-session-from-transcript))
+
+  ;; Insert mode key bindings (C-c prefix) - in agent-shell buffers
+  (map! :map agent-shell-mode-map
+        :i "C-c C-c" #'agent-shell-interrupt
+        :i "C-c f"   #'agent-shell-insert-file
+        :i "C-c !"   #'agent-shell-insert-shell-command-output)
+#+END_SRC
+
+Annoyingly, there are no entries in evil-collection for agent-shell, and it recognises `RET` as a evil motion instead of a way of interacting with the dropdowns.
+This negates this behaviour
+#+BEGIN_SRC elisp
+  (after! evil
+    (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'comint-send-input)))
+#+END_SRC
+
+* Prodigy
+#+BEGIN_SRC elisp
+(map! :leader
+      :desc "Prodigy" "o p" #'prodigy)
+#+END_SRC
+
+* Magit
+https://mbork.pl/2022-11-19_Streamlining_my_workflow_with_Magit_and_BitBucket
+#+BEGIN_SRC elisp
+(defun magit-open-pull-request-pr ()
+  "Open the pull request URL if applicable."
+  (interactive)
+  (save-excursion
+    (set-buffer (magit-process-buffer t))
+    (goto-char (point-max))
+    (magit-section-backward)
+    (when
+        (search-backward-regexp "remote: \\(To create a merge\\|Create pull\\) request" nil t)
+      (forward-line 1)
+      (re-search-forward "remote: +" (line-end-position) t)
+      (browse-url-at-point))))
+#+END_SRC
+
+* Angular
+Make the server selection depend on whether the file belongs to an Angular project rather than on the major mode alone.
+Angular projects almost always contain an angular.json at the project root. You can use that to detect Angular projects.
+#+BEGIN_SRC elisp
+(defun my/start-angular-eglot ()
+  (when (and (derived-mode-p 'web-mode)
+             (locate-dominating-file default-directory "angular.json"))
+    (eglot-ensure)))
+
+(add-hook 'web-mode-hook #'my/start-angular-eglot)
+#+END_SRC
+
+Server registration
+#+BEGIN_SRC elisp
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '(web-mode . ("ngserver" "--stdio"))))
+#+END_SRC
